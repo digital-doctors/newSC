@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <h1>SmartCard</h1>
+            <button id="add-card-btn" class="icon-button">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 5v14M5 12h14"/>
+                </svg>
+            </button>
+        </header>
+
+        <!-- Cards Display -->
+        <main class="cards-container">
+            <div id="cards-stack" class="cards-stack">
+                <!-- Cards will be dynamically inserted here -->
+            </div>
+            
+            <div id="empty-state" class="empty-state">
+                <div class="empty-icon">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="2" y="5" width="20" height="14" rx="2"/>
+                        <path d="M2 10h20"/>
+                    </svg>
+                </div>
+                <h2>No Cards Added</h2>
+                <p>Add your first credit card to start optimizing your rewards</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Recommendation Popup -->
+    <div id="recommendation-popup" class="recommendation-popup">
+        <div class="popup-content">
+            <div class="popup-header">
+                <h3>Recommended Card</h3>
+                <button class="popup-close">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="popup-body">
+                <div id="recommendation-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Location Permission Modal -->
+    <div id="location-modal" class="modal">
+        <div class="modal-content location-modal-content">
+            <div class="modal-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                </svg>
+            </div>
+            <h2>Enable Location Services</h2>
+            <p>SmartCard uses your location to automatically recommend the best card for nearby merchants. Your location data is only used for card recommendations and is never shared.</p>
+            <div class="modal-actions">
+                <button id="location-deny" class="btn btn-secondary">Not Now</button>
+                <button id="location-allow" class="btn btn-primary">Enable Location</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Card Modal -->
+    <div id="card-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Add Card</h2>
+                <button class="modal-close">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <form id="card-form" class="card-form">
+                <div class="form-section">
+                    <h3>Card Information</h3>
+                    
+                    <div class="form-group">
+                        <label>Card Name</label>
+                        <input type="text" id="card-name" required placeholder="Chase Sapphire Reserve">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Card Network</label>
+                            <select id="card-network">
+                                <option value="visa">Visa</option>
+                                <option value="mastercard">Mastercard</option>
+                                <option value="amex">American Express</option>
+                                <option value="discover">Discover</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Card Color</label>
+                            <select id="card-color">
+                                <option value="blue">Blue</option>
+                                <option value="black">Black</option>
+                                <option value="gold">Gold</option>
+                                <option value="silver">Silver</option>
+                                <option value="green">Green</option>
+                                <option value="red">Red</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Base Cashback Rate (%)</label>
+                        <input type="number" id="base-rate" required step="0.01" min="0" placeholder="1.5">
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3>Category Bonuses</h3>
+                    <div id="category-bonuses-list"></div>
+                    <button type="button" id="add-bonus-btn" class="btn btn-secondary btn-sm">Add Category Bonus</button>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary modal-cancel">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Card</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
